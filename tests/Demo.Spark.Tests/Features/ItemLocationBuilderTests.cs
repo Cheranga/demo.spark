@@ -5,21 +5,24 @@ using FluentAssertions;
 
 namespace Demo.Spark.Tests.Features;
 
+[Collection(SparkTestCollection.Name)]
 public class ItemLocationBuilderTests
 {
+    private readonly SparkInitializer _env;
     private const string IsoDateFormat = "yyyy-MM-dd HH:mm:ss";
-    private readonly SparkSession _spark;
 
-    public ItemLocationBuilderTests() =>
-        _spark = SparkSession.Builder().AppName(nameof(ItemLocationBuilderTests)).GetOrCreate();
+    public ItemLocationBuilderTests(SparkInitializer env)
+    {
+        _env = env;
+    }
 
     [Fact(DisplayName = "There are items which have matching item locations")]
     public void Test()
     {
         var currentDateTime = DateTime.UtcNow;
-        var items = _spark.GetDataFrame(new[] { new Item(1000001, 2010, currentDateTime) });
+        var items = _env.Spark.GetDataFrame(new[] { new Item(1000001, 2010, currentDateTime) });
 
-        var itemLocations = _spark.GetDataFrame(
+        var itemLocations = _env.Spark.GetDataFrame(
             new[] { new ItemLocation(1000001, 2010, "AU"), new ItemLocation(1000002, 2011, "NZ") }
         );
 

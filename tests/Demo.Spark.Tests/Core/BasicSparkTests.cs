@@ -2,15 +2,16 @@ using FluentAssertions;
 
 namespace Demo.Spark.Tests.Core;
 
-public class BasicSparkTests : IDisposable
+[Collection(SparkTestCollection.Name)]
+public class BasicSparkTests
 {
-    private readonly SparkSession _spark;
+    private readonly SparkInitializer _env;
 
-    public BasicSparkTests() =>
-        _spark = SparkSession.Builder().AppName(nameof(BasicSparkTests)).GetOrCreate();
-
-    public void Dispose() => _spark.Dispose();
-
+    public BasicSparkTests(SparkInitializer env)
+    {
+        _env = env;
+    }
+    
     [Fact]
     public void StartEndSparkSession()
     {
@@ -27,7 +28,7 @@ public class BasicSparkTests : IDisposable
             new GenericRow(new object[] {2, "B"}),
         };
 
-        var dataFrame = _spark.CreateDataFrame(data, schema);
+        var dataFrame = _env.Spark.CreateDataFrame(data, schema);
         dataFrame.Collect().ToList().Count.Should().Be(2);
     }
 }
