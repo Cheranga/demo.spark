@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Spark.Tests", "tests\Demo.Spark.Tests\Demo.Spark.Tests.csproj", "{C99CFE81-C38C-4E82-8DC5-F35AE62BF838}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Spark.ETL", "src\Demo.Spark.ETL\Demo.Spark.ETL.csproj", "{523CD942-B24A-4D80-9A0D-C053E32D0128}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{C99CFE81-C38C-4E82-8DC5-F35AE62BF838}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C99CFE81-C38C-4E82-8DC5-F35AE62BF838}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C99CFE81-C38C-4E82-8DC5-F35AE62BF838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{523CD942-B24A-4D80-9A0D-C053E32D0128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{523CD942-B24A-4D80-9A0D-C053E32D0128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{523CD942-B24A-4D80-9A0D-C053E32D0128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{523CD942-B24A-4D80-9A0D-C053E32D0128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

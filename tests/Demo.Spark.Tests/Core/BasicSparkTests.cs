@@ -1,8 +1,6 @@
 using FluentAssertions;
-using Microsoft.Spark.Sql;
-using Microsoft.Spark.Sql.Types;
 
-namespace Demo.Spark.Tests;
+namespace Demo.Spark.Tests.Core;
 
 public class BasicSparkTests : IDisposable
 {

@@ -24,4 +24,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Demo.Spark.ETL\Demo.Spark.ETL.csproj" />
+    </ItemGroup>
+
 </Project>
