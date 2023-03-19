@@ -6,12 +6,12 @@ using FluentAssertions;
 namespace Demo.Spark.Tests.Features;
 
 [Collection(SparkTestCollection.Name)]
-public class ItemLocationBuilderTests
+public class LooselyTypedItemLocationBuilderTests
 {
     private readonly SparkInitializer _env;
     private const string IsoDateFormat = "yyyy-MM-dd HH:mm:ss";
 
-    public ItemLocationBuilderTests(SparkInitializer env)
+    public LooselyTypedItemLocationBuilderTests(SparkInitializer env)
     {
         _env = env;
     }
@@ -26,7 +26,7 @@ public class ItemLocationBuilderTests
             new[] { new ItemLocation(1000001, 2010, "AU"), new ItemLocation(1000002, 2011, "NZ") }
         );
 
-        var dataFrame = ItemLocationBuilder.Build(items, itemLocations);
+        var dataFrame = LooselyTypedItemLocationBuilder.Build(items, itemLocations);
         var results = dataFrame.Collect().ToList();
         results.Should().ContainSingle();
 

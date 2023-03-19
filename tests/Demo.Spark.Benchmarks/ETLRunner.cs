@@ -28,8 +28,14 @@ public class EtlRunner : IDisposable
     }
 
     public void Dispose() => _spark.Dispose();
-
+    
     [Benchmark(Baseline = true)]
+    public void ObjectOrientedTypedBuilder()
+    {
+        var _ = ItemLocationBuilder.Build(_items, _itemLocations);
+    }
+
+    [Benchmark]
     public void LooselyTypedBuilder()
     {
         var _ = LooselyTypedItemLocationBuilder.Build(_items, _itemLocations);
