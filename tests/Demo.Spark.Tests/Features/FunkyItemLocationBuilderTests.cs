@@ -23,7 +23,7 @@ public class FunkyItemLocationBuilderTests
             new[] { new ItemLocation(1000001, 2010, "AU"), new ItemLocation(1000002, 2011, "NZ") }
         );
 
-        var dataFrame = FunkyItemLocationBuilder.Build(
+        var dataFrame = StronglyTypedItemLocationBuilder.Build(
             items,
             itemLocations,
             new ItemSchema(),
