@@ -6,15 +6,12 @@ using FluentAssertions;
 namespace Demo.Spark.Tests.Features;
 
 [Collection(SparkTestCollection.Name)]
-public class ItemLocationBuilderTests
+public class StronglyTypedItemLocationBuilderTests
 {
-    private readonly SparkInitializer _env;
     private const string IsoDateFormat = "yyyy-MM-dd HH:mm:ss";
+    private readonly SparkInitializer _env;
 
-    public ItemLocationBuilderTests(SparkInitializer env)
-    {
-        _env = env;
-    }
+    public StronglyTypedItemLocationBuilderTests(SparkInitializer env) => _env = env;
 
     [Fact(DisplayName = "There are items which have matching item locations")]
     public void ItemLocationsAreAvailableForItems()
@@ -26,7 +23,12 @@ public class ItemLocationBuilderTests
             new[] { new ItemLocation(1000001, 2010, "AU"), new ItemLocation(1000002, 2011, "NZ") }
         );
 
-        var dataFrame = LooselyTypedItemLocationBuilder.Build(items, itemLocations);
+        var dataFrame = StronglyTypedItemLocationBuilder.Build(
+            items,
+            itemLocations,
+            new ItemSchema(),
+            new ItemLocationSchema()
+        );
         var results = dataFrame.Collect().ToList();
         results.Should().ContainSingle();
 

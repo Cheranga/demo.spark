@@ -6,12 +6,9 @@ namespace Demo.Spark.ETL.Core;
 
 public static class SparkHelper
 {
-    public static Column GetCol(this DataFrame dataFrame, Func<DataFrame, Column> colFunc) =>
-        colFunc(dataFrame);
-
     public static Box<DataFrame> GetDataFrameFor(DataFrame dataFrame) => new(dataFrame);
 
-    public static DataType ToDataType(this Type type)
+    private static DataType ToDataType(this Type type)
     {
         var typeCode = Type.GetTypeCode(type);
         return typeCode switch
@@ -28,7 +25,7 @@ public static class SparkHelper
         };
     }
 
-    public static StructType GetSchema(this object model)
+    private static StructType GetSchema(this object model)
     {
         var properties = model.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
         var sparkProperties = properties.Select(
@@ -58,7 +55,7 @@ public static class SparkHelper
         return dataFrame;
     }
 
-    public static object GetPropertyValue(this PropertyInfo property, object instance) =>
+    private static object GetPropertyValue(this PropertyInfo property, object instance) =>
         (Type.GetTypeCode(property.PropertyType) switch
         {
             TypeCode.DateTime => new Timestamp((DateTime)property.GetValue(instance)!),
