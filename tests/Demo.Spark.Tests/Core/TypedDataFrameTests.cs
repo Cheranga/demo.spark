@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Demo.Spark.ETL.Features.StudentLoans;
+using FluentAssertions;
 
 namespace Demo.Spark.Tests.Core;
 

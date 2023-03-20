@@ -10,8 +10,4 @@
       <PackageReference Include="Microsoft.Spark" Version="2.1.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Typed" />
-    </ItemGroup>
-
 </Project>

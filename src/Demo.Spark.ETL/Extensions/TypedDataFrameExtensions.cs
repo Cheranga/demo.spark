@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Reflection;
 using Demo.Spark.ETL.Core;
 using Microsoft.Spark.Sql;
 using Microsoft.Spark.Sql.Types;
@@ -35,4 +36,12 @@ public static class TypedDataFrameExtensions
     )
         where TSchema : ISchema
         where TSpark : DataType => dataFrame.Filter(dataFrame.Col(expr.Col()).EqualTo(Lit(value)));
+
+    public static DataFrame ToSchema<TSchema>(this DataFrame dataFrame)
+        where TSchema : ISchema
+    {
+        var properties = typeof(TSchema).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+        var columns = properties.Select(x => dataFrame.Col(x.Name));
+        return dataFrame.Select(columns.ToArray());
+    }
 }
