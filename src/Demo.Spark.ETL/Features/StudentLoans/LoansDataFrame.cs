@@ -1,4 +1,5 @@
 ﻿using Demo.Spark.ETL.Core;
+using Demo.Spark.ETL.Features.Schemas;
 using Microsoft.Spark.Sql;
 using static Microsoft.Spark.Sql.Functions;
 

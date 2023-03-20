@@ -1,38 +1,10 @@
 using Demo.Spark.ETL.Core;
 using Demo.Spark.ETL.Extensions;
+using Demo.Spark.ETL.Features.Schemas;
 using Microsoft.Spark.Sql;
 using static Demo.Spark.ETL.Extensions.SparkExtensions;
 
 namespace Demo.Spark.ETL.Features.GetItemsInLocations;
-
-public interface IItemSchema
-{
-    Func<DataFrame, Column> ItemNumber { get; }
-
-    Func<DataFrame, Column> LocationCode { get; }
-    Func<DataFrame, Column> LastModified { get; }
-}
-
-public record ItemSchema : IItemSchema
-{
-    public Func<DataFrame, Column> ItemNumber => frame => frame.Col(nameof(ItemNumber));
-    public Func<DataFrame, Column> LocationCode => frame => frame.Col(nameof(LocationCode));
-    public Func<DataFrame, Column> LastModified => frame => frame.Col(nameof(LastModified));
-}
-
-public interface IItemLocationSchema
-{
-    Func<DataFrame, Column> ItemNumber { get; }
-    Func<DataFrame, Column> LocationCode { get; }
-    Func<DataFrame, Column> Country { get; }
-}
-
-public record ItemLocationSchema : IItemLocationSchema
-{
-    public Func<DataFrame, Column> ItemNumber => frame => frame.Col(nameof(ItemNumber));
-    public Func<DataFrame, Column> LocationCode => frame => frame.Col(nameof(LocationCode));
-    public Func<DataFrame, Column> Country => frame => frame.Col(nameof(Country));
-}
 
 public static class StronglyTypedItemLocationBuilder
 {

@@ -1,6 +1,6 @@
 ﻿using Demo.Spark.ETL.Core;
 
-namespace Demo.Spark.ETL.Features.StudentLoans;
+namespace Demo.Spark.ETL.Features.Schemas;
 
 public class StudentLoanSchema : ISchema
 {

@@ -1,5 +1,6 @@
 ﻿using Demo.Spark.ETL.Core;
 using Demo.Spark.ETL.Extensions;
+using Demo.Spark.ETL.Features.Schemas;
 
 namespace Demo.Spark.ETL.Features.StudentLoans;
 

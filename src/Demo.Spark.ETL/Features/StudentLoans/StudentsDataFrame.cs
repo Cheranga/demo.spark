@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Demo.Spark.ETL.Core;
 using Demo.Spark.ETL.Extensions;
+using Demo.Spark.ETL.Features.Schemas;
 using Microsoft.Spark.Sql;
 using Microsoft.Spark.Sql.Types;
 using static Microsoft.Spark.Sql.Functions;
