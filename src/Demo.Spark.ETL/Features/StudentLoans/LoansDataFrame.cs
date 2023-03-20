@@ -1,4 +1,5 @@
 ﻿using Demo.Spark.ETL.Core;
+using Demo.Spark.ETL.Extensions;
 using Demo.Spark.ETL.Features.Schemas;
 using Microsoft.Spark.Sql;
 using static Microsoft.Spark.Sql.Functions;
@@ -11,8 +12,8 @@ public sealed class LoansDataFrame : TypedDataFrameBase<LoanSchema>
         : base(dataFrame) { }
 
     public LoansDataFrame GetLoan(int loanId) =>
-        new(DataFrame.Where(Col(x => x.Id).EqualTo(Lit(loanId))));
+        new(DataFrame.Where(this.Col(x => x.Id).EqualTo(Lit(loanId))));
 
     public LoansDataFrame GetLoan(string loanName) =>
-        new(DataFrame.Where(Upper(Col(x => x.Name)).EqualTo(Upper(Lit(loanName)))));
+        new(DataFrame.Where(Upper(this.Col(x => x.Name)).EqualTo(Upper(Lit(loanName)))));
 }

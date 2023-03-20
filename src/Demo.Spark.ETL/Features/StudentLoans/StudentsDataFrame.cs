@@ -14,10 +14,10 @@ public sealed class StudentsDataFrame : TypedDataFrameBase<StudentSchema>
         : base(dataFrame) { }
 
     public StudentsDataFrame FindStudentById(int studentId) =>
-        new(DataFrame.Where(Col(x => x.Id).EqualTo(Lit(studentId))));
+        new(DataFrame.Where(this.Col(x => x.Id).EqualTo(Lit(studentId))));
 
     public StudentsDataFrame FindStudentByName(string name) =>
-        new(DataFrame.Where(Upper(Col(x => x.Name)).EqualTo(Upper(Lit(name)))));
+        new(DataFrame.Where(Upper(this.Col(x => x.Name)).EqualTo(Upper(Lit(name)))));
 
     public StudentsDataFrame Filter<TSpark, TDotNet>(
         Expression<Func<StudentSchema, ISparkDotNetType<TSpark, TDotNet>>> expr,

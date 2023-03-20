@@ -4,7 +4,7 @@ namespace Demo.Spark.ETL.Features.Schemas;
 
 public abstract class LoanSchema : ISchema
 {
-    public IntegerDataType Id { get; }
-    public StringDataType Name  { get; }
-    public IntegerDataType StudentId  { get; }
+    public IntegerDataType Id => null!;
+    public StringDataType Name => null!;
+    public IntegerDataType StudentId => null!;
 }

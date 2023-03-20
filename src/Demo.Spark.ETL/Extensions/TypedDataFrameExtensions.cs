@@ -21,14 +21,6 @@ public static class TypedDataFrameExtensions
         return memberExp.Member.Name;
     }
 
-    // public static string Col<TSchema>(this Expression<Func<TSchema, DataType>> exp)
-    //     where TSchema : ISchema
-    // {
-    //     if (exp.Body is not MemberExpression memberExp)
-    //         memberExp = ((exp.Body as UnaryExpression)!.Operand as MemberExpression)!;
-    //     return memberExp.Member.Name;
-    // }
-
     public static DataFrame FilterDataFrame<TSchema, TSpark, TDotNet>(
         this DataFrame dataFrame,
         Expression<Func<TSchema, ISparkDotNetType<TSpark, TDotNet>>> expr,
@@ -44,4 +36,19 @@ public static class TypedDataFrameExtensions
         var columns = properties.Select(x => dataFrame.Col(x.Name));
         return dataFrame.Select(columns.ToArray());
     }
+
+    public static Column Col<TSchema, TSpark, TDotNet>(
+        this ITypedDataFrame<TSchema> typedDataFrame,
+        Expression<Func<TSchema, ISparkDotNetType<TSpark, TDotNet>>> expression
+    )
+        where TSchema : ISchema
+        where TSpark : DataType => typedDataFrame.ToRaw().Col(expression.Col());
+
+    public static Column ColAs<TSchema, TSpark, TDotNet>(
+        this ITypedDataFrame<TSchema> typedDataFrame,
+        Expression<Func<TSchema, ISparkDotNetType<TSpark, TDotNet>>> expression,
+        string alias
+    )
+        where TSchema : ISchema
+        where TSpark : DataType => typedDataFrame.ToRaw().Col(expression.Col()).As(alias);
 }
