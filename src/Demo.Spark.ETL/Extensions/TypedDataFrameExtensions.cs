@@ -15,7 +15,8 @@ public static class TypedDataFrameExtensions
         where TSchema : ISchema
     {
         if (exp.Body is not MemberExpression memberExp)
-            memberExp = ((exp.Body as UnaryExpression)!.Operand as MemberExpression)!;
+            throw new Exception("Invalid expression");
+
         return memberExp.Member.Name;
     }
 
