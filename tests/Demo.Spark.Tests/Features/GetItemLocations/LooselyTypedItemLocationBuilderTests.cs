@@ -1,9 +1,9 @@
-﻿using Demo.Spark.ETL.Core;
+﻿using Demo.Spark.ETL.Extensions;
 using Demo.Spark.ETL.Features.GetItemsInLocations;
 using Demo.Spark.Tests.Models;
 using FluentAssertions;
 
-namespace Demo.Spark.Tests.Features;
+namespace Demo.Spark.Tests.Features.GetItemLocations;
 
 [Collection(SparkTestCollection.Name)]
 public class LooselyTypedItemLocationBuilderTests

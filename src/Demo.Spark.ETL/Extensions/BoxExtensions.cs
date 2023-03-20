@@ -1,6 +1,8 @@
-namespace Demo.Spark.ETL.Core;
+using Demo.Spark.ETL.Core;
 
-public static class BoxMethods
+namespace Demo.Spark.ETL.Extensions;
+
+public static class BoxExtensions
 {
     public static Box<T> ToBox<T>(this T data) => new(data);
 

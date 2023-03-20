@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Order;
-using Demo.Spark.ETL.Core;
+using Demo.Spark.ETL.Extensions;
 using Demo.Spark.ETL.Features.GetItemsInLocations;
+using Demo.Spark.ETL.Features.Schemas;
 using Demo.Spark.Tests.Models;
 using Microsoft.Spark.Sql;
 

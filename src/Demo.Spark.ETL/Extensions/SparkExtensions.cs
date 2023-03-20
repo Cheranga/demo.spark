@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
+using Demo.Spark.ETL.Core;
 using Microsoft.Spark.Sql;
 using Microsoft.Spark.Sql.Types;
 
-namespace Demo.Spark.ETL.Core;
+namespace Demo.Spark.ETL.Extensions;
 
-public static class SparkHelper
+public static class SparkExtensions
 {
     public static Box<DataFrame> GetDataFrameFor(DataFrame dataFrame) => new(dataFrame);
 
