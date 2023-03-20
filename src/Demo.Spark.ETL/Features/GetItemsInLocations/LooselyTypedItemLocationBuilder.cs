@@ -1,6 +1,7 @@
 using Demo.Spark.ETL.Core;
+using Demo.Spark.ETL.Extensions;
 using Microsoft.Spark.Sql;
-using static Demo.Spark.ETL.Core.SparkHelper;
+using static Demo.Spark.ETL.Extensions.SparkExtensions;
 
 namespace Demo.Spark.ETL.Features.GetItemsInLocations;
 

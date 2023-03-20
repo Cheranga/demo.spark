@@ -1,4 +1,4 @@
-﻿using Demo.Spark.ETL.Core;
+﻿using Demo.Spark.ETL.Extensions;
 using Demo.Spark.ETL.Features.GetItemsInLocations;
 using Demo.Spark.Tests.Models;
 using FluentAssertions;

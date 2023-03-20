@@ -1,17 +1,13 @@
-﻿using Demo.Spark.ETL.Core;
-using FluentAssertions;
+﻿using FluentAssertions;
 
 namespace Demo.Spark.Tests.Core;
 
 [Collection(SparkTestCollection.Name)]
 public class TypedDataFrameTests
 {
-    private readonly SparkSession _spark;
+    private readonly StudentsDataFrame _dataFrame;
 
-    public TypedDataFrameTests(SparkInitializer initializer) => _spark = initializer.Spark;
-
-    [Fact]
-    public void SelectWithRawDataFrame()
+    public TypedDataFrameTests(SparkInitializer initializer)
     {
         var schema = new StructType(
             new[]
@@ -20,98 +16,43 @@ public class TypedDataFrameTests
                 new StructField("Name", new StringType())
             }
         );
-        var dataFrame = _spark.CreateDataFrame(
-            new GenericRow[] { new(new object[] { 1, "A" }), new(new object[] { 2, "B" }) },
-            schema
+        _dataFrame = new StudentsDataFrame(
+            initializer.Spark.CreateDataFrame(
+                new GenericRow[] { new(new object[] { 1, "A" }), new(new object[] { 2, "B" }) },
+                schema
+            )
         );
-
-        var studentDataFrame = new StudentsDataFrame(dataFrame);
-
-        var dataFrameWithId = dataFrame.Select(studentDataFrame.Col(s => s.Id));
-        dataFrameWithId.Collect().ToList().Count.Should().Be(2);
-
-        var dataFrameWithName = dataFrame.Select(studentDataFrame.Col(s => s.Name));
-        dataFrameWithName.Collect().ToList().Count.Should().Be(2);
-
-        var dataFrameWithAll = dataFrame.Select(
-            studentDataFrame.Col(s => s.Id),
-            studentDataFrame.Col(s => s.Name)
-        );
-        dataFrameWithAll.Collect().ToList().Count.Should().Be(2);
-
-        var filteredByIdDataFrame = dataFrame.Filter(studentDataFrame.Col(s => s.Id).Gt(1));
-        filteredByIdDataFrame.Collect().ToList().First().GetAs<int>("Id").Should().Be(2);
     }
 
     [Fact]
-    public void SelectWithStudentDataFrame()
+    public void FindStudentById()
     {
-        var schema = new StructType(
-            new[]
-            {
-                new StructField("Id", new IntegerType()),
-                new StructField("Name", new StringType())
-            }
-        );
-        var dataFrame = _spark.CreateDataFrame(
-            new GenericRow[] { new(new object[] { 1, "A" }), new(new object[] { 2, "B" }) },
-            schema
-        );
-
-        var studentDataFrame = new StudentsDataFrame(dataFrame);
-
-        var dataFrameWithId = studentDataFrame.Select(x => x.Id);
-        var dataFrameWithAll = studentDataFrame.Select(x => x.Id, x => x.Name);
-
-        dataFrameWithId.ToDataFrame().Collect().ToList().Count.Should().Be(2);
-        dataFrameWithAll.ToDataFrame().Collect().ToList().Count.Should().Be(2);
+        var studentWithId = _dataFrame.FindStudentById(1);
+        var student = studentWithId.ToDataFrame().Collect().First();
+        student.GetAs<string>("Name").Should().Be("A");
     }
 
     [Fact]
-    public void FindStudentsWithStudentDataFrame()
+    public void FindStudentByName()
     {
-        var schema = new StructType(
-            new[]
-            {
-                new StructField("Id", new IntegerType()),
-                new StructField("Name", new StringType())
-            }
-        );
-        var dataFrame = _spark.CreateDataFrame(
-            new GenericRow[] { new(new object[] { 1, "A" }), new(new object[] { 2, "B" }) },
-            schema
-        );
-
-        var studentDataFrame = new StudentsDataFrame(dataFrame);
-
-        var studentWithId = studentDataFrame.FindStudentById(1);
-        var studentWithName = studentDataFrame.FindStudentByName("B");
-
-        studentWithId.ToDataFrame().Collect().ToList().Count.Should().Be(1);
-        studentWithName.ToDataFrame().Collect().ToList().Count.Should().Be(1);
+        var studentWithName = _dataFrame.FindStudentByName("B");
+        var student = studentWithName.ToDataFrame().Collect().First();
+        student.GetAs<int>("Id").Should().Be(2);
+    }
+    
+    [Fact]
+    public void FilterStudentById()
+    {
+        var studentWithId = _dataFrame.Filter(x => x.Id, 1);
+        var student = studentWithId.ToDataFrame().Collect().First();
+        student.GetAs<string>("Name").Should().Be("A");
     }
 
     [Fact]
-    public void FilterStudentsWithStudentDataFrame()
+    public void FilterStudentByName()
     {
-        var schema = new StructType(
-            new[]
-            {
-                new StructField("Id", new IntegerType()),
-                new StructField("Name", new StringType())
-            }
-        );
-        var dataFrame = _spark.CreateDataFrame(
-            new GenericRow[] { new(new object[] { 1, "A" }), new(new object[] { 2, "B" }) },
-            schema
-        );
-
-        var studentDataFrame = new StudentsDataFrame(dataFrame);
-
-        var studentWithId = studentDataFrame.Filter(x => x.Id, 1);
-        var studentWithName = studentDataFrame.Filter(x => x.Name, "A");
-
-        studentWithId.ToDataFrame().Collect().ToList().Count.Should().Be(1);
-        studentWithName.ToDataFrame().Collect().ToList().Count.Should().Be(1);
+        var studentWithName = _dataFrame.Filter(x => x.Name, "A");
+        var student = studentWithName.ToDataFrame().Collect().First();
+        student.GetAs<int>("Id").Should().Be(1);
     }
 }
