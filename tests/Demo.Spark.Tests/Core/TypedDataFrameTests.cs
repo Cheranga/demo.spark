@@ -14,12 +14,13 @@ public class TypedDataFrameTests
             new[]
             {
                 new StructField("Id", new IntegerType()),
-                new StructField("Name", new StringType())
+                new StructField("Name", new StringType()),
+                new StructField("LoanId", new IntegerType())
             }
         );
         _dataFrame = new StudentsDataFrame(
             initializer.Spark.CreateDataFrame(
-                new GenericRow[] { new(new object[] { 1, "A" }), new(new object[] { 2, "B" }) },
+                new GenericRow[] { new(new object[] { 1, "A", 100 }), new(new object[] { 2, "B", 200 }) },
                 schema
             )
         );

@@ -45,7 +45,8 @@ public static class StudentLoanService
             students
                 .Join<LoansDataFrame, LoanSchema>(
                     loans,
-                    students.Col(x=>x.Id)
+                    students
+                        .Col(x => x.Id)
                         .EqualTo(loans.Col(x => x.StudentId))
                         .And(students.Col(x => x.LoanId).EqualTo(loans.Col(x => x.Id)))
                 )

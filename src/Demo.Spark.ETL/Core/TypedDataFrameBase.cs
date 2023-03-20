@@ -1,3 +1,4 @@
+using Demo.Spark.ETL.Extensions;
 using Microsoft.Spark.Sql;
 
 namespace Demo.Spark.ETL.Core;
@@ -5,7 +6,7 @@ namespace Demo.Spark.ETL.Core;
 public abstract class TypedDataFrameBase<TSchema> : ITypedDataFrame<TSchema>
     where TSchema : ISchema
 {
-    protected TypedDataFrameBase(DataFrame dataFrame) => DataFrame = dataFrame;
+    protected TypedDataFrameBase(DataFrame dataFrame) => DataFrame = dataFrame.ToSchema<TSchema>();
 
     protected DataFrame DataFrame { get; }
 
