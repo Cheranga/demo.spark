@@ -5,12 +5,12 @@ using FluentAssertions;
 namespace Demo.Spark.Tests.Features.StudentLoans;
 
 [Collection(SparkTestCollection.Name)]
-public class StudentLoanServiceTests
+public class StudentLoanOperationsTests
 {
     private readonly LoansDataFrame _loans;
     private readonly StudentsDataFrame _students;
 
-    public StudentLoanServiceTests(SparkInitializer initializer)
+    public StudentLoanOperationsTests(SparkInitializer initializer)
     {
         var studentSchema = new StructType(
             new[]
@@ -37,7 +37,9 @@ public class StudentLoanServiceTests
             {
                 new StructField("Id", new IntegerType()),
                 new StructField("Name", new StringType()),
-                new StructField("StudentId", new IntegerType())
+                new StructField("StudentId", new IntegerType()),
+                new StructField("LoanStartDate", new TimestampType()),
+                new StructField("LoanEndDate", new TimestampType())
             }
         );
 
@@ -45,8 +47,8 @@ public class StudentLoanServiceTests
             initializer.Spark.CreateDataFrame(
                 new GenericRow[]
                 {
-                    new(new object[] { 100, "Long Term Loan", 1 }),
-                    new(new object[] { 200, "Short Term Loan", 1 })
+                    new(new object[] { 100, "Long Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(10)) }),
+                    new(new object[] { 200, "Short Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(5)) })
                 },
                 loanSchema
             )
@@ -60,7 +62,7 @@ public class StudentLoanServiceTests
     [InlineData(1, "short term loan")]
     public void FindingStudentLoansWithLoanName(int studentId, string loanType)
     {
-        var studentLoans = StudentLoanService.GetStudentLoans(
+        var studentLoans = StudentLoanOperations.GetStudentLoans(
             _students,
             _loans,
             studentId,
@@ -90,7 +92,7 @@ public class StudentLoanServiceTests
     [InlineData(1, 200, "short term loan")]
     public void FindingStudentLoansWithLoanId(int studentId, int loanId, string expectedLoanType)
     {
-        var studentLoans = StudentLoanService.GetStudentLoans(
+        var studentLoans = StudentLoanOperations.GetStudentLoans(
             _students,
             _loans,
             studentId,

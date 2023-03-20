@@ -4,7 +4,7 @@ using Demo.Spark.ETL.Features.Schemas;
 
 namespace Demo.Spark.ETL.Features.StudentLoans;
 
-public static class StudentLoanService
+public static class StudentLoanOperations
 {
     public static Box<StudentLoansDataFrame> GetStudentLoans(
         StudentsDataFrame students,
@@ -53,7 +53,9 @@ public static class StudentLoanService
                 .Select(
                     loans.ColAs(x => x.StudentId, nameof(StudentLoanSchema.CustomerId)),
                     students.ColAs(x => x.Name, nameof(StudentLoanSchema.CustomerFullName)),
-                    loans.ColAs(x => x.Name, nameof(StudentLoanSchema.BankLoanType))
+                    loans.ColAs(x => x.Name, nameof(StudentLoanSchema.BankLoanType)),
+                    loans.ColAs(x => x.LoanStartDate, nameof(StudentLoanSchema.StartDate)),
+                    loans.ColAs(x => x.LoanEndDate, nameof(StudentLoanSchema.EndDate))
                 )
         ).ToBox();
 }

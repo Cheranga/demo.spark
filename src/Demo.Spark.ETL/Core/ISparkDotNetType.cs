@@ -16,3 +16,8 @@ public abstract class StringDataType : ISparkDotNetType<StringType, string>
 public abstract class IntegerDataType : ISparkDotNetType<IntegerType, int>
 {
 }
+
+[ExcludeFromCodeCoverage]
+public abstract class DateTimeDataType : ISparkDotNetType<DateType, DateTime>
+{
+}

@@ -9,4 +9,6 @@ public abstract class LoanSchema : ISchema
     public IntegerDataType Id => null!;
     public StringDataType Name => null!;
     public IntegerDataType StudentId => null!;
+    public DateTimeDataType LoanStartDate => null!;
+    public DateTimeDataType LoanEndDate => null!;
 }
