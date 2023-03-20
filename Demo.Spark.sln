@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Spark.ETL", "src\Demo.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Spark.Benchmarks", "tests\Demo.Spark.Benchmarks\Demo.Spark.Benchmarks.csproj", "{848CCDC1-41B9-4BF9-B97A-2051FB879EC0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0CA41248-D565-4C14-B66F-175E20F7A769}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3D19AF12-99CE-4C66-948A-D227BB6E4827}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,10 @@ Global
 		{848CCDC1-41B9-4BF9-B97A-2051FB879EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{848CCDC1-41B9-4BF9-B97A-2051FB879EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{848CCDC1-41B9-4BF9-B97A-2051FB879EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{523CD942-B24A-4D80-9A0D-C053E32D0128} = {0CA41248-D565-4C14-B66F-175E20F7A769}
+		{848CCDC1-41B9-4BF9-B97A-2051FB879EC0} = {3D19AF12-99CE-4C66-948A-D227BB6E4827}
+		{C99CFE81-C38C-4E82-8DC5-F35AE62BF838} = {3D19AF12-99CE-4C66-948A-D227BB6E4827}
 	EndGlobalSection
 EndGlobal
