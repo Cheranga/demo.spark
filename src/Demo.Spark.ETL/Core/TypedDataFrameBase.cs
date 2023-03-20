@@ -17,5 +17,5 @@ public abstract class TypedDataFrameBase<TSchema> : ITypedDataFrame<TSchema>
     )
         where TSpark : DataType => DataFrame.Col(expression.Col());
 
-    public DataFrame ToDataFrame() => DataFrame;
+    public DataFrame ToRaw() => DataFrame;
 }

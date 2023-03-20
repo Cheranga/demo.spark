@@ -28,7 +28,7 @@ public class TypedDataFrameTests
     public void FindStudentById()
     {
         var studentWithId = _dataFrame.FindStudentById(1);
-        var student = studentWithId.ToDataFrame().Collect().First();
+        var student = studentWithId.ToRaw().Collect().First();
         student.GetAs<string>("Name").Should().Be("A");
     }
 
@@ -36,7 +36,7 @@ public class TypedDataFrameTests
     public void FindStudentByName()
     {
         var studentWithName = _dataFrame.FindStudentByName("B");
-        var student = studentWithName.ToDataFrame().Collect().First();
+        var student = studentWithName.ToRaw().Collect().First();
         student.GetAs<int>("Id").Should().Be(2);
     }
     
@@ -44,7 +44,7 @@ public class TypedDataFrameTests
     public void FilterStudentById()
     {
         var studentWithId = _dataFrame.Filter(x => x.Id, 1);
-        var student = studentWithId.ToDataFrame().Collect().First();
+        var student = studentWithId.ToRaw().Collect().First();
         student.GetAs<string>("Name").Should().Be("A");
     }
 
@@ -52,7 +52,7 @@ public class TypedDataFrameTests
     public void FilterStudentByName()
     {
         var studentWithName = _dataFrame.Filter(x => x.Name, "A");
-        var student = studentWithName.ToDataFrame().Collect().First();
+        var student = studentWithName.ToRaw().Collect().First();
         student.GetAs<int>("Id").Should().Be(1);
     }
 }
