@@ -7,7 +7,7 @@ namespace Demo.Spark.ETL.Extensions;
 
 public static class SparkExtensions
 {
-    public static Box<DataFrame> GetDataFrameFor(DataFrame dataFrame) => new(dataFrame);
+    public static Box<DataFrame> GetDataFrameFor(DataFrame dataFrame) => Box<DataFrame>.New(dataFrame);
 
     private static DataType ToDataType(this Type type)
     {
