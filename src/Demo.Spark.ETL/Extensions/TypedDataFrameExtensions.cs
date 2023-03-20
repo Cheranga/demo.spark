@@ -21,13 +21,13 @@ public static class TypedDataFrameExtensions
         return memberExp.Member.Name;
     }
 
-    public static string Col<TSchema>(this Expression<Func<TSchema, DataType>> exp)
-        where TSchema : ISchema
-    {
-        if (exp.Body is not MemberExpression memberExp)
-            memberExp = ((exp.Body as UnaryExpression)!.Operand as MemberExpression)!;
-        return memberExp.Member.Name;
-    }
+    // public static string Col<TSchema>(this Expression<Func<TSchema, DataType>> exp)
+    //     where TSchema : ISchema
+    // {
+    //     if (exp.Body is not MemberExpression memberExp)
+    //         memberExp = ((exp.Body as UnaryExpression)!.Operand as MemberExpression)!;
+    //     return memberExp.Member.Name;
+    // }
 
     public static DataFrame FilterDataFrame<TSchema, TSpark, TDotNet>(
         this DataFrame dataFrame,

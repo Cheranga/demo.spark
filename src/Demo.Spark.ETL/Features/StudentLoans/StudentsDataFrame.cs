@@ -11,9 +11,7 @@ namespace Demo.Spark.ETL.Features.StudentLoans;
 public sealed class StudentsDataFrame : TypedDataFrameBase<StudentSchema>
 {
     public StudentsDataFrame(DataFrame dataFrame)
-        : base(dataFrame)
-    {
-    }
+        : base(dataFrame) { }
 
     public StudentsDataFrame FindStudentById(int studentId) =>
         new(DataFrame.Where(Col(x => x.Id).EqualTo(Lit(studentId))));

@@ -4,22 +4,38 @@ using Demo.Spark.ETL.Features.Schemas;
 
 namespace Demo.Spark.ETL.Features.StudentLoans;
 
-public class StudentLoanService
+public static class StudentLoanService
 {
-    private readonly LoansDataFrame _loans;
-    private readonly StudentsDataFrame _students;
-
-    public StudentLoanService(StudentsDataFrame students, LoansDataFrame loans)
-    {
-        _students = students;
-        _loans = loans;
-    }
-
-    public Box<StudentLoansDataFrame> GetStudentLoans(int studentId, string loanType) =>
-        from student in _students.FindStudentById(studentId).ToBox()
-        from loan in _loans.GetLoan(loanType).ToBox()
+    public static Box<StudentLoansDataFrame> GetStudentLoans(
+        StudentsDataFrame students,
+        LoansDataFrame loans,
+        int studentId,
+        string loanType
+    ) =>
+        from student in FindStudent(students, studentId)
+        from loan in FindLoans(loans, loanType)
         from studentLoans in GetLoansForStudent(student, loan)
         select studentLoans;
+
+    public static Box<StudentLoansDataFrame> GetStudentLoans(
+        StudentsDataFrame students,
+        LoansDataFrame loans,
+        int studentId,
+        int loanId
+    ) =>
+        from student in FindStudent(students, studentId)
+        from loan in FindLoans(loans, loanId)
+        from studentLoans in GetLoansForStudent(student, loan)
+        select studentLoans;
+
+    private static Box<StudentsDataFrame> FindStudent(StudentsDataFrame students, int studentId) =>
+        students.FindStudentById(studentId).ToBox();
+
+    private static Box<LoansDataFrame> FindLoans(LoansDataFrame loans, string loanType) =>
+        loans.GetLoan(loanType).ToBox();
+
+    private static Box<LoansDataFrame> FindLoans(LoansDataFrame loans, int loanId) =>
+        loans.GetLoan(loanId).ToBox();
 
     private static Box<StudentLoansDataFrame> GetLoansForStudent(
         StudentsDataFrame students,
@@ -27,7 +43,7 @@ public class StudentLoanService
     ) =>
         new StudentLoansDataFrame(
             students
-                .JoinWith<LoansDataFrame, LoanSchema>(
+                .Join<LoansDataFrame, LoanSchema>(
                     loans,
                     students
                         .Col(x => x.Id)
@@ -35,9 +51,9 @@ public class StudentLoanService
                         .And(students.Col(x => x.LoanId).EqualTo(loans.Col(x => x.Id)))
                 )
                 .Select(
-                    loans.ColAs(x => x.StudentId, nameof(StudentLoanSchema.CustomerId)),
-                    students.ColAs(x => x.Name, nameof(StudentLoanSchema.CustomerFullName)),
-                    loans.ColAs(x => x.Name, nameof(StudentLoanSchema.BankLoanType))
+                    loans.Col(x => x.StudentId, nameof(StudentLoanSchema.CustomerId)),
+                    students.Col(x => x.Name, nameof(StudentLoanSchema.CustomerFullName)),
+                    loans.Col(x => x.Name, nameof(StudentLoanSchema.BankLoanType))
                 )
         ).ToBox();
 }
