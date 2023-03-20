@@ -1,7 +1,9 @@
-﻿using Microsoft.Spark.Sql;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Spark.Sql;
 
 namespace Demo.Spark.ETL.Features.Schemas;
 
+[ExcludeFromCodeCoverage]
 public record ItemLocationSchema : IItemLocationSchema
 {
     public Func<DataFrame, Column> ItemNumber => frame => frame.Col(nameof(ItemNumber));

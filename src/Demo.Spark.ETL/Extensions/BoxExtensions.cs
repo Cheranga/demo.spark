@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Demo.Spark.ETL.Core;
 
 namespace Demo.Spark.ETL.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class BoxExtensions
 {
     public static Box<T> ToBox<T>(this T data) => new(data);

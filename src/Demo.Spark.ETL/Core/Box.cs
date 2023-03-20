@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Demo.Spark.ETL.Core;
 
+[ExcludeFromCodeCoverage]
 public class Box<T>
 {
     private readonly T _data = default!;
