@@ -21,3 +21,8 @@ public abstract class IntegerDataType : ISparkDotNetType<IntegerType, int>
 public abstract class DateTimeDataType : ISparkDotNetType<DateType, DateTime>
 {
 }
+
+[ExcludeFromCodeCoverage]
+public abstract class BooleanDataType : ISparkDotNetType<BooleanType, bool>
+{
+}

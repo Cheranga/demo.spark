@@ -38,8 +38,9 @@ public class StudentLoanOperationsTests
                 new StructField("Id", new IntegerType()),
                 new StructField("Name", new StringType()),
                 new StructField("StudentId", new IntegerType()),
-                new StructField("LoanStartDate", new TimestampType()),
-                new StructField("LoanEndDate", new TimestampType())
+                new StructField("StartDate", new TimestampType()),
+                new StructField("EndDate", new TimestampType()),
+                new StructField("IsActive", new BooleanType())
             }
         );
 
@@ -47,8 +48,8 @@ public class StudentLoanOperationsTests
             initializer.Spark.CreateDataFrame(
                 new GenericRow[]
                 {
-                    new(new object[] { 100, "Long Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(10)) }),
-                    new(new object[] { 200, "Short Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(5)) })
+                    new(new object[] { 100, "Long Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(10)), true }),
+                    new(new object[] { 200, "Short Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(5)), true })
                 },
                 loanSchema
             )

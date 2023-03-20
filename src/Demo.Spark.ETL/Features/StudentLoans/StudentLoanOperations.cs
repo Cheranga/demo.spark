@@ -54,8 +54,9 @@ public static class StudentLoanOperations
                     loans.ColAs(x => x.StudentId, nameof(StudentLoanSchema.CustomerId)),
                     students.ColAs(x => x.Name, nameof(StudentLoanSchema.CustomerFullName)),
                     loans.ColAs(x => x.Name, nameof(StudentLoanSchema.BankLoanType)),
-                    loans.ColAs(x => x.LoanStartDate, nameof(StudentLoanSchema.StartDate)),
-                    loans.ColAs(x => x.LoanEndDate, nameof(StudentLoanSchema.EndDate))
+                    loans.ColAs(x => x.StartDate, nameof(StudentLoanSchema.LoanStartDate)),
+                    loans.ColAs(x => x.EndDate, nameof(StudentLoanSchema.LoanEndDate)),
+                    loans.ColAs(x => x.IsActive, nameof(StudentLoanSchema.IsDue))
                 )
         ).ToBox();
 }
