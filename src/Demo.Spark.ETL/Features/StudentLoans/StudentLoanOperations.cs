@@ -13,8 +13,10 @@ public static class StudentLoanOperations
         string loanType
     ) =>
         from student in FindStudent(students, studentId)
-        from loan in FindLoans(loans, loanType)
+            .MapFail(Error.New("error when getting student"))
+        from loan in FindLoans(loans, loanType).MapFail(Error.New("error when getting loan"))
         from studentLoans in GetLoansForStudent(student, loan)
+            .MapFail(Error.New("error when getting student loans"))
         select studentLoans;
 
     public static Box<StudentLoansDataFrame> GetStudentLoans(

@@ -72,4 +72,14 @@ public static class BoxExtensions
 
         return Box<TB>.New(transformed);
     }
+
+    public static Box<TA> MapFail<TA>(this Box<TA> box, Error error)
+    {
+        if (box.IsError)
+        {
+            return Box<TA>.Fail(error);
+        }
+
+        return box;
+    }
 }
