@@ -18,7 +18,7 @@ public static class BoxExtensions
 
         var extracted = box.Data;
 
-        TB transformedItem = map(extracted);
+        var transformedItem = map(extracted);
 
         return Box<TB>.New(transformedItem);
     }
@@ -33,12 +33,12 @@ public static class BoxExtensions
 
         var extract = box.Data;
 
-        Box<TB> liftedResult = bind(extract);
+        var liftedResult = bind(extract);
 
         if(liftedResult.IsEmpty)
             return Box<TC>.New();
 
-        TC t2 = project(extract, liftedResult.Data);
+        var t2 = project(extract, liftedResult.Data);
         return Box<TC>.New(t2);
     }
 
@@ -51,7 +51,7 @@ public static class BoxExtensions
         if(box.IsEmpty)
             return Box<TB>.New();
 
-        TA extract = box.Data;
+        var extract = box.Data;
 
         Box<TB> transformedAndLifted = bind(extract);
 
@@ -66,9 +66,9 @@ public static class BoxExtensions
         if(box.IsEmpty)
             return Box<TB>.New();
 
-        TA extract = box.Data;
+        var extract = box.Data;
 
-        TB transformed = select(extract);
+        var transformed = select(extract);
 
         return Box<TB>.New(transformed);
     }
