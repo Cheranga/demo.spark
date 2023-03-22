@@ -1,7 +1,7 @@
 ﻿using Demo.Spark.ETL.Features.Schemas;
 using Demo.Spark.ETL.Features.StudentLoans;
 using FluentAssertions;
-
+using static Demo.Spark.ETL.Extensions.SparkExtensions;
 namespace Demo.Spark.Tests.Features.StudentLoans;
 
 [Collection(SparkTestCollection.Name)]
@@ -12,15 +12,6 @@ public class StudentLoanOperationsTests
 
     public StudentLoanOperationsTests(SparkInitializer initializer)
     {
-        var studentSchema = new StructType(
-            new[]
-            {
-                new StructField("Id", new IntegerType()),
-                new StructField("Name", new StringType()),
-                new StructField("LoanId", new IntegerType())
-            }
-        );
-        
         _students = new StudentsDataFrame(
             initializer.Spark.CreateDataFrame(
                 new GenericRow[]
@@ -28,20 +19,8 @@ public class StudentLoanOperationsTests
                     new(new object[] { 1, "Cheranga", 100 }),
                     new(new object[] { 1, "Cheranga", 200 })
                 },
-                studentSchema
+                ToSchema<StudentSchema>()
             )
-        );
-
-        var loanSchema = new StructType(
-            new[]
-            {
-                new StructField("Id", new IntegerType()),
-                new StructField("Name", new StringType()),
-                new StructField("StudentId", new IntegerType()),
-                new StructField("StartDate", new TimestampType()),
-                new StructField("EndDate", new TimestampType()),
-                new StructField("IsActive", new BooleanType())
-            }
         );
 
         _loans = new LoansDataFrame(
@@ -51,7 +30,7 @@ public class StudentLoanOperationsTests
                     new(new object[] { 100, "Long Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(10)), true }),
                     new(new object[] { 200, "Short Term Loan", 1, new Timestamp(DateTime.UtcNow), new Timestamp(DateTime.UtcNow.AddYears(5)), true })
                 },
-                loanSchema
+                ToSchema<LoanSchema>()
             )
         );
     }

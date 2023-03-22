@@ -7,7 +7,8 @@ namespace Demo.Spark.ETL.Extensions;
 
 public static class SparkExtensions
 {
-    public static Box<DataFrame> GetDataFrameFor(DataFrame dataFrame) => Box<DataFrame>.New(dataFrame);
+    public static Box<DataFrame> GetDataFrameFor(DataFrame dataFrame) =>
+        Box<DataFrame>.New(dataFrame);
 
     private static DataType ToDataType(this Type type)
     {
@@ -57,9 +58,34 @@ public static class SparkExtensions
     }
 
     private static object GetPropertyValue(this PropertyInfo property, object instance) =>
-        (Type.GetTypeCode(property.PropertyType) switch
+    (
+        Type.GetTypeCode(property.PropertyType) switch
         {
             TypeCode.DateTime => new Timestamp((DateTime)property.GetValue(instance)!),
             _ => property.GetValue(instance)
-        })!;
+        }
+    )!;
+
+    public static StructType ToSchema<TSchema>()
+        where TSchema : ISchema
+    {
+        var properties = typeof(TSchema)
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(x => x.PropertyType.IsImplementing(typeof(ISparkDotNetType<,>)))
+            .Select(
+                x =>
+                    new
+                    {
+                        x.Name,
+                        DotNetType = x.PropertyType
+                            .GetInterface(typeof(ISparkDotNetType<,>).Name)!
+                            .GenericTypeArguments[1]
+                    }
+            )
+            .ToList();
+
+        return new StructType(
+            properties.Select(x => new StructField(x.Name, x.DotNetType.ToDataType()))
+        );
+    }
 }
